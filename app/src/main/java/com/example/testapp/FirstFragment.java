@@ -11,6 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 public class FirstFragment extends Fragment {
 
     TextView showCountTextView;
@@ -34,8 +36,9 @@ public class FirstFragment extends Fragment {
         view.findViewById(R.id.random_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                NavHostFragment.findNavController(FirstFragment.this)
-                        .navigate(R.id.action_FirstFragment_to_SecondFragment);
+                int currentCount = Integer.parseInt(showCountTextView.getText().toString());
+                FirstFragmentDirections.ActionFirstFragmentToSecondFragment action = FirstFragmentDirections.actionFirstFragmentToSecondFragment(currentCount);
+                NavHostFragment.findNavController(FirstFragment.this).navigate(action);
             }
         });
 
@@ -59,9 +62,9 @@ public class FirstFragment extends Fragment {
         // Get the value of the text view
         String countString = showCountTextView.getText().toString();
         // Convert value to a number and increment it
-        Integer count = Integer.parseInt(countString);
+        int count = Integer.parseInt(countString);
         count++;
         // Display the new value in the text view.
-        showCountTextView.setText(count.toString());
+        showCountTextView.setText(Integer.toString(count));
     }
 }
